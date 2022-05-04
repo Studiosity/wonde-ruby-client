@@ -20,6 +20,7 @@ module Wonde
     REST_OF_WORLD_DOMAIN = 'api.wonde.com'.freeze
 
     attr_accessor :schools, :attendanceCodes, :token, :domain
+
     @@attendanceCodes
     @@token
     @@version = '0.0.6'
@@ -61,7 +62,7 @@ module Wonde
     #   client = Wonde::Client.new("SOMETOKEN")
     #   client.requestAccess("A0000000000")
     def requestAccess(schoolId)
-      Wonde::Endpoints.new(token, ('schools/' + schoolId + '/request-access'), domain: domain).post()
+      Wonde::Endpoints.new(token, ('schools/' + schoolId + '/request-access'), domain: domain).post
     end
 
     # revokeAccess endpoint DELETE
@@ -73,8 +74,7 @@ module Wonde
     #   client = Wonde::Client.new("SOMETOKEN")
     #   client.revokeAccess('A0000000000')
     def revokeAccess(schoolId)
-      Wonde::Endpoints.new(token, ('schools/' + schoolId + '/revoke-access'), domain: domain).delete()
+      Wonde::Endpoints.new(token, ('schools/' + schoolId + '/revoke-access'), domain: domain).delete
     end
-
   end
 end

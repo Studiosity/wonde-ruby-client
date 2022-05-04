@@ -1,9 +1,8 @@
-
 module Wonde
   autoload :Client, 'client'
   autoload :Endpoints, 'endpoints'
   autoload :ResultIterator, 'resultiterator'
-  #Endpoints
+  # Endpoints
   autoload :Achievements, 'endpoints/achievements'
   autoload :Assessment, 'endpoints/assessment'
   autoload :Attendance, 'endpoints/attendance'
@@ -28,18 +27,18 @@ module Wonde
   autoload :Schools, 'endpoints/schools'
   autoload :Students, 'endpoints/students'
   autoload :Subjects, 'endpoints/subjects'
-  #Assesments
+  # Assesments
   autoload :Aspects, 'endpoints/assessment/aspects'
   autoload :MarkSheets, 'endpoints/assessment/marksheets'
   autoload :Results, 'endpoints/assessment/results'
   autoload :ResultSets, 'endpoints/assessment/resultsets'
   autoload :Templates, 'endpoints/assessment/templates'
-  #Writebacks
+  # Writebacks
   autoload :LessonAttendanceRecord, 'writeback/lessonattendancerecord'
   autoload :LessonRegister, 'writeback/lessonregister'
   autoload :SessionAttendanceRecord, 'writeback/sessionattendancerecord'
   autoload :SessionRegister, 'writeback/sessionregister'
-  #Exceptions
+  # Exceptions
   autoload :InvalidAttendanceException, 'exceptions/invalidattendanceexception'
   autoload :InvalidLessonAttendanceException, 'exceptions/invalidlessonattendanceexception'
   autoload :InvalidSessionException, 'exceptions/invalidsessionexception'

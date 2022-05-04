@@ -1,28 +1,27 @@
 module Wonde
   class SessionRegister
     attr_accessor :attendance
-    def initialize()
-      self.attendance = Array.new()
+
+    def initialize
+      self.attendance = []
     end
 
-    def to_json()
-            {'attendance' => [self.attendance]}.to_json
+    def to_json(*_args)
+      { 'attendance' => [attendance] }.to_json
     end
 
     def add(attendance)
-      newattendance = Array.new()
+      newattendance = []
       newattendance.push(attendance)
       newattendance.each do |attendanceSingular|
-        if attendanceSingular.class == SessionAttendanceRecord && attendanceSingular.isValid()
-          self.attendance = attendanceSingular.toArray()
+        if attendanceSingular.instance_of?(SessionAttendanceRecord) && attendanceSingular.isValid
+          self.attendance = attendanceSingular.toArray
         else
-          unless attendanceSingular.class == SessionAttendanceRecord
+          unless attendanceSingular.instance_of?(SessionAttendanceRecord)
             throw InvalidAttendanceException, 'Attendance is not an instance of the Attendance Class.'
           end
-          unless attendanceSingular.isValid()
-            throw InvalidAttendanceException, 'Attendance has empty fields.'
-          end
-            throw InvalidAttendanceException
+          throw InvalidAttendanceException, 'Attendance has empty fields.' unless attendanceSingular.isValid
+          throw InvalidAttendanceException
         end
       end
     end

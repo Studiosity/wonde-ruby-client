@@ -1,28 +1,27 @@
 module Wonde
   class LessonRegister
     attr_accessor :attendance
-    def initialize()
-      self.attendance = Array.new()
+
+    def initialize
+      self.attendance = []
     end
 
-    def to_json()
-            {'attendance' => [self.attendance]}.to_json
+    def to_json(*_args)
+      { 'attendance' => [attendance] }.to_json
     end
 
     def add(lessonAttendance)
-      newlessonattendance = Array.new()
+      newlessonattendance = []
       newlessonattendance.push(lessonAttendance)
       newlessonattendance.each do |lessonAttendanceSingular|
-        if lessonAttendanceSingular.class == LessonAttendanceRecord && lessonAttendanceSingular.isValid()
-          self.attendance = lessonAttendanceSingular.toArray()
+        if lessonAttendanceSingular.instance_of?(LessonAttendanceRecord) && lessonAttendanceSingular.isValid
+          self.attendance = lessonAttendanceSingular.toArray
         else
-          unless lessonAttendanceSingular.class == LessonAttendanceRecord
+          unless lessonAttendanceSingular.instance_of?(LessonAttendanceRecord)
             throw InvalidLessonAttendanceException, 'Attendance is not an instance of the LessonAttendance Class.'
           end
-          unless lessonAttendanceSingular.isValid()
-            throw InvalidLessonAttendanceException, 'Attendance has empty fields.'
-          end
-            throw InvalidLessonAttendanceException
+          throw InvalidLessonAttendanceException, 'Attendance has empty fields.' unless lessonAttendanceSingular.isValid
+          throw InvalidLessonAttendanceException
         end
       end
     end
