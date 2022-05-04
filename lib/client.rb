@@ -21,8 +21,6 @@ module Wonde
 
     attr_accessor :schools, :attendanceCodes, :token, :domain
 
-    @@attendanceCodes
-    @@token
     @@version = '0.0.6'
     # Initialize a Client Object
     #
@@ -34,7 +32,6 @@ module Wonde
     #   Wonde::Client.new("SOMETOKEN") #=> #<Wonde::Client:0x007fb223953da0 @token="SOMETOKEN">
     #   Wonde::Client.new("SOMETOKEN", region: :australia) #=> #<Wonde::Client:0x007fb223953da0 @token="SOMETOKEN">
     def initialize(token, region: :rest_of_world)
-      @@token = token
       @domain = REGION_DOMAIN_LOOKUP[region] || REST_OF_WORLD_DOMAIN
       @token = token
       @schools = Wonde::Schools.new(token, domain: domain)
