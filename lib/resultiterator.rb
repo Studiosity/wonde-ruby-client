@@ -2,7 +2,7 @@ module Wonde
   class ResultIterator < Endpoints
     include Enumerable
     attr_accessor :myarray, :meta, :token
-    def initialize(myhashostruct, token)
+    def initialize(myhashostruct, token, domain:)
       super
       p myhashostruct if ENV["debug_wonde"]
       self.token = token

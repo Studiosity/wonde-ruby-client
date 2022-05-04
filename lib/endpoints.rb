@@ -7,12 +7,10 @@ module Wonde
     require "addressable/uri"
     require 'json'
     attr_accessor :endpoint, :uri, :token, :version
-    # Main endpoint, base URI
-    @@endpoint = 'https://api.wonde.com/v1.0/'
 
 
-    def initialize(token, uri=false)
-      self.endpoint = @@endpoint
+    def initialize(token, uri=false, domain:)
+      self.endpoint = "https://#{domain}/v1.0/"
       self.uri = String.new()
       self.version = '0.0.1'
       self.token = token

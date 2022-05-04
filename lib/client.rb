@@ -14,22 +14,30 @@ module Wonde
   #     p school.name
   #   end
   class Client
-    attr_accessor :schools, :attendanceCodes, :token
+    REGION_DOMAIN_LOOKUP = {
+      australia: 'api-ap-southeast-2.wonde.com'
+    }.freeze
+    REST_OF_WORLD_DOMAIN = 'api.wonde.com'.freeze
+
+    attr_accessor :schools, :attendanceCodes, :token, :domain
     @@attendanceCodes
     @@token
     @@version = '0.0.6'
     # Initialize a Client Object
     #
-    # @param token [String]
+    # @param token [String] Wonde API token
+    # @param region [Symbol] Either :rest_of_world (default) or :australia
     # @return [Object]
     #
     # @example
     #   Wonde::Client.new("SOMETOKEN") #=> #<Wonde::Client:0x007fb223953da0 @token="SOMETOKEN">
-    def initialize(token)
+    #   Wonde::Client.new("SOMETOKEN", region: :australia) #=> #<Wonde::Client:0x007fb223953da0 @token="SOMETOKEN">
+    def initialize(token, region: :rest_of_world)
       @@token = token
+      @domain = REGION_DOMAIN_LOOKUP[region] || REST_OF_WORLD_DOMAIN
       @token = token
-      @schools = Wonde::Schools.new(token)
-      @attendanceCodes = Wonde::AttendanceCodes.new(token)
+      @schools = Wonde::Schools.new(token, domain: domain)
+      @attendanceCodes = Wonde::AttendanceCodes.new(token, domain: domain)
     end
 
     # Get School/Schools Object
@@ -41,7 +49,7 @@ module Wonde
     #   client = Wonde::Client.new("SOMETOKEN")
     #   school = client.school('SCHOOLID')
     def school(id)
-      return Wonde::Schools.new(@token, id)
+      Wonde::Schools.new(token, id, domain: domain)
     end
 
     # requestAccess endpoint POST
@@ -53,7 +61,7 @@ module Wonde
     #   client = Wonde::Client.new("SOMETOKEN")
     #   client.requestAccess("A0000000000")
     def requestAccess(schoolId)
-      return Wonde::Endpoints.new(@token, ('schools/' + schoolId + '/request-access')).post()
+      Wonde::Endpoints.new(token, ('schools/' + schoolId + '/request-access'), domain: domain).post()
     end
 
     # revokeAccess endpoint DELETE
@@ -65,7 +73,7 @@ module Wonde
     #   client = Wonde::Client.new("SOMETOKEN")
     #   client.revokeAccess('A0000000000')
     def revokeAccess(schoolId)
-      return Wonde::Endpoints.new(@token, ('schools/' + schoolId + '/revoke-access')).delete()
+      Wonde::Endpoints.new(token, ('schools/' + schoolId + '/revoke-access'), domain: domain).delete()
     end
 
   end
