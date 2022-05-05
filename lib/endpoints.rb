@@ -6,13 +6,14 @@ module Wonde
     require 'ostruct'
     require 'addressable/uri'
     require 'json'
-    attr_accessor :endpoint, :uri, :token, :version
+    attr_accessor :endpoint, :uri, :token, :domain, :version
 
     def initialize(token, uri = false, domain:)
       self.endpoint = "https://#{domain}/v1.0/"
       self.uri = String.new
       self.version = '0.0.1'
       self.token = token
+      self.domain = domain
       self.uri = uri if uri
     end
 
@@ -136,7 +137,7 @@ module Wonde
       puts response if ENV['debug_wonde']
       object = JSON.parse(response, object_class: OpenStruct)
       puts object if ENV['debug_wonde']
-      ResultIterator.new(object, token)
+      ResultIterator.new(object, token, domain: domain)
     end
   end
 end
